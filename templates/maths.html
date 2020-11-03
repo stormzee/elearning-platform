@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+
+{% block courses %}
+{% for course in maths_courses %}
+
+<h2>{{ course.title }}</h2>
+
+{% endfor %} 
+
+{% endblock courses %}

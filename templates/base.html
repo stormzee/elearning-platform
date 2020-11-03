@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  {% include 'head.html' %}
+</head>
+
+<body>
+    {% include 'navbar.html' %}
+
+    {% block content %}
+    {% endblock content %}
+    
+    {% comment %} load courses block when we are in the courses template 
+    or where ever we see block courses {% endcomment %}
+    {% block courses %}
+    {% endblock courses %}
+
+    {% comment %} load footer from footer.html {% endcomment %}
+    {% include 'footer.html' %}
+    {% comment %} load scripts from scripts.html{% endcomment %}
+    {% include 'scripts.html' %}
+</body>
+
+</html>
