@@ -46,6 +46,7 @@ def register(request):
         #         # error messages is a dictionary
         #         # so we have to pass the key for the actual message to be displayed
         #         print(form.error_messages[error])
+    # create new form to avoid resubmission of form
     form = UserCreationForm        
     return render(request, 'register.html', context = {'form':form})
 
