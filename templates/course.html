@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h2>{{ course.title }}</h2>
+<br>
+<p>{{ course.content|safe }}</p>
+<br>
+
+{% endblock content %}

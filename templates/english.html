@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+
+{% comment %} {% block courses %} {% endcomment %}
+{% for course in english_courses %}
+
+<h2>{{ course.title }}</h2>
+
+{% endfor %} 
+
+{% comment %} {% endblock courses %} {% endcomment %}

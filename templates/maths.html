@@ -4,8 +4,15 @@
 {% block courses %}
 {% for course in maths_courses %}
 
-<h2>{{ course.title }}</h2>
-
+<div class="card" style="width: 18rem;">
+  <img class="card-img-top" src="{{ course.thumbnail.url }}" alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">{{ course.title }}</h5>
+    <p class="card-text">{{ course.Description }}</p>
+    <a href="{% url 'course' course.id %}" class="btn btn-primary">Start course</a>
+  </div>
+</div>
+<br>
 {% endfor %} 
 
 {% endblock courses %}
