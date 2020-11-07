@@ -6,5 +6,31 @@
 <br>
 <p>{{ course.content|safe }}</p>
 <br>
-
+<p>course created by: {{ course.creator }}</p>
+<h3> Comments ({{course.comments.count}})</h3>
+{% for comment in course.get_comments %}
+{% comment %} if the current user is the author of the course, display profile pic and other properties {% endcomment %}
+    {% if comment.user.author %}
+        {% comment %} show the profile pic of the commentor {% endcomment %}
+        <img class="img-fluid rounded circle" src="{{ comment.user.author.profile_picture.url }}" alt="" width="30px">
+        {% comment %} show the name of the commentor {% endcomment %}
+    {% endif %}
+        <bold>{{ comment.user.username }}</bold><br>
+        <small>{{ comment.time_created|timesince }} ago</small><br>
+    {% comment %} show the name of the person who wrote that comment {% endcomment %}
+        <p>{{ comment.content }}</p>
+        
+    {% comment %} you can show what ever variable you want to show
+    eg. profile pic, time commented {% endcomment %}
+{% endfor %}
+<br>
+{% if user.is_authenticated %}
+<form method='POST' action=''>
+    {% csrf_token %}
+      {{ form }}
+     <button type='submit'>Submit your comment</button>
+</form>
+{% else %}
+   <h4>Please login to comment <a href="{% url 'login' %}">Login</a></h4>
+{% endif %}
 {% endblock content %}

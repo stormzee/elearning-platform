@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Course, Category, Author
 from django.contrib.auth.forms import UserCreationForm, User
 from django.contrib.auth import login, logout, authenticate
-
+from .forms import CommentForm
 # Create your views here.
 
 def index(request):
@@ -73,4 +73,14 @@ def course(request, course_id):
         course = get_object_or_404(Course, id = course_id)
     except Course.DoesNotExist:
         raise Http404("Course doesnt exist")
-    return render(request, 'course.html', context={'course':course})
+# we are implementing our comment system here
+# 1st create an instance of the comment form and populate it with the iput data from the user
+    form = CommentForm(request.POST or None)
+    if request.method == 'POST':
+        if form.is_valid():
+            form.instance.user = request.user
+            form.instance.course = course
+            form.save()        
+        return redirect('course', course_id=course_id)
+    return render(request, 'course.html', context={'course':course, 'form':form})
+    
