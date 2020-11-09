@@ -3,9 +3,19 @@ from .models import Course, Category, Author
 from django.contrib.auth.forms import UserCreationForm, User
 from django.contrib.auth import login, logout, authenticate
 from .forms import CommentForm
+from subscription.models import Subscriber
 # Create your views here.
 
 def index(request):
+    if request.method == 'POST':
+        # grab the email from the form email field
+        email = request.POST['email']
+        # create an instance of the subcriber model
+        new_subscriber = Subscriber()
+        # get the email of the new subscriber by using dot notation( new_subscriber.email) and assign the grabbed email to it
+        new_subscriber.email = email
+        # save it in the db
+        new_subscriber.save()
     return render(request, 'index.html')
 
 def categories(request):
@@ -46,7 +56,11 @@ def register(request):
         #         # error messages is a dictionary
         #         # so we have to pass the key for the actual message to be displayed
         #         print(form.error_messages[error])
-    # create new form to avoid resubmission of form
+    # create new form to avoid resubmission of form 
+    # or to get a new form on the template for user to fill.
+    # if request is POST on the register.html==> take data and create a new user with it
+    # else if there is a GET (no post request), create a new form on the page for the user
+    # this is what happens the 1st time you visit the register.html page cuz there is no POST request
     form = UserCreationForm        
     return render(request, 'register.html', context = {'form':form})
 
@@ -78,6 +92,7 @@ def course(request, course_id):
     form = CommentForm(request.POST or None)
     if request.method == 'POST':
         if form.is_valid():
+            # assign the user and the course of that particular comment
             form.instance.user = request.user
             form.instance.course = course
             form.save()        

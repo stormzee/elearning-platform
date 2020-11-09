@@ -27,7 +27,7 @@
 {% if user.is_authenticated %}
 <form method='POST' action=''>
     {% csrf_token %}
-      {{ form }}
+      {{ form.as_p }}
      <button type='submit'>Submit your comment</button>
 </form>
 {% else %}
